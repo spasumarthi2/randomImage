@@ -4,9 +4,12 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
+import java.io.File;
+import java.io.IOException;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 import javax.net.ssl.HttpsURLConnection;
-
+import java.util.Scanner;
 public class HttpURLConnectionExample {
 
 	private final String USER_AGENT = "Mozilla/5.0";
@@ -21,6 +24,38 @@ public class HttpURLConnectionExample {
 		http.sendGet3();
 		http.sendGet4();
 		http.sendGet5();
+
+		//image dimensions
+		int width=128;
+		int height=128;
+
+		//creates buffered image object
+		BufferedImage img= new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+		//File object
+		File f=null;
+
+		// Creates Scanner to read through random
+
+		Scanner scan= new Scanner(System.in);
+
+		for (int y=0; y<height; y++){
+			for (int x=0; x<width; x++){
+				int r= scan.nextInt();
+				int g=scan.nextInt();
+				int b= scan.nextInt();
+				int p= (r<<16) | (g<<8) | b;
+				img.setRGB(x,y,p);
+			}
+		}
+
+		//Write image here
+		try {
+			f= new File("D:\\Image\\Output.png");
+		ImageIO.write(img, "png", f);
+		} catch (IOException e){
+		System.out.println("Error "+ e);
+		}
 	}
 
 	// HTTP GET request
@@ -182,6 +217,9 @@ public class HttpURLConnectionExample {
 
 		//print result
 		System.out.println(response5.toString());
-
 	}
 }
+
+
+		
+		
